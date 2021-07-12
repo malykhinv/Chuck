@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_item_joke"
+        android:icon="@drawable/image_punch"
+        android:title="@string/jokes" />
+    <item
+        android:id="@+id/menu_item_web"
+        android:icon="@drawable/image_globe"
+        android:title="@string/web" />
+</menu>
