@@ -4,5 +4,8 @@
     <string name="jokes">Jokes</string>
     <string name="web">Web</string>
 
-    <string name="press_back_again_to_quit">Press Back again to quit</string>
+    <string name="toast_press_back_again_to_quit">Press Back again to quit</string>
+    <string name="toast_incorrect_number" formatted="true">%d is unavailable number of jokes to show</string>
+
+    <string name="hint_count_of_jokes_field">Number of jokes (1 – 99)</string>
 </resources>

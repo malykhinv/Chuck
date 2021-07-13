@@ -13,4 +13,6 @@
     <dimen name="margin">32dp</dimen>
     <dimen name="margin_small">24dp</dimen>
     <dimen name="margin_xsmall">8dp</dimen>
+
+    <dimen name="padding">20dp</dimen>
 </resources>
