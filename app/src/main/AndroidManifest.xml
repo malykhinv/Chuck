@@ -3,6 +3,7 @@
     package="com.malykhinv.chuck">
 
     <application
+        android:name="com.malykhinv.di.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
