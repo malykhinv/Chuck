@@ -18,8 +18,8 @@ import com.malykhinv.chuck.mvp.view.fragments.WebviewFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int INITIAL_MENU_ITEM_INDEX = 0;
-    private final int EXIT_ON_BACK_PRESS_WAITING_TIME = 2000;
+    private static final int INITIAL_MENU_ITEM_INDEX = 0;
+    private static final int EXIT_ON_BACK_PRESS_WAITING_TIME = 2000;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private JokesFragment jokesFragment;
     private WebviewFragment webviewFragment;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             } else {
                 isAboutToClose = true;
-                showMessage(getString(R.string.press_back_again_to_quit));
+                showMessage(getString(R.string.toast_press_back_again_to_quit));
                 new Handler().postDelayed(() -> isAboutToClose = false, EXIT_ON_BACK_PRESS_WAITING_TIME);
             }
         }

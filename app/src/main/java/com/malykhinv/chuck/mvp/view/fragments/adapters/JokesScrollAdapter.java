@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.malykhinv.chuck.databinding.ItemSingleJokeBinding;
-import com.malykhinv.di.App;
+import com.malykhinv.chuck.di.App;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class JokesScrollAdapter extends RecyclerView.Adapter<JokesScrollAdapter.
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ItemSingleJokeBinding b;
 
