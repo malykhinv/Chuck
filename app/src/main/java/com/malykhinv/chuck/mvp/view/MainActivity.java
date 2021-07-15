@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,10 +29,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setStrictModeThreadPolicy();
         bind();
         initializeFragments();
         initializeBottomNavigation();
         showInitialFragment();
+    }
+
+    private void setStrictModeThreadPolicy() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     private void bind() {
