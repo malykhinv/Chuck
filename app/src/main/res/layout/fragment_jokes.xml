@@ -32,7 +32,8 @@
         app:backgroundTint="@color/orange_f5"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="true" />
 
     <EditText
         android:id="@+id/editTextCountOfJokes"
@@ -43,7 +44,7 @@
         android:background="@drawable/input_field_background"
         android:ems="10"
         android:hint="@string/hint_count_of_jokes_field"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:longClickable="false"
         android:maxLength="2"
         android:paddingStart="@dimen/padding"
@@ -52,5 +53,6 @@
         android:textColorHint="@color/grey_99"
         app:layout_constraintBottom_toBottomOf="@+id/fabReloadJokes"
         app:layout_constraintEnd_toStartOf="@+id/fabReloadJokes"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,9 @@ public class JokesPresenter implements JokesModel.Callback {
 
     public JokesPresenter(JokesFragment view) {
         this.view = view;
-        this.model = new JokesModel();
+        if (model == null) {
+            this.model = new JokesModel();
+        }
 
         model.registerCallback(this);
     }
@@ -29,6 +31,11 @@ public class JokesPresenter implements JokesModel.Callback {
 
     public void onViewCreated() {
         view.initializeRecyclerView();
+
+        if (model.hasStoredData()) {
+            ArrayList<String> listOfJokes = model.readListOfJokesFromMemory();
+            view.showJokes(listOfJokes);
+        }
     }
 
     public void onRefreshButtonWasClicked() {
@@ -55,6 +62,7 @@ public class JokesPresenter implements JokesModel.Callback {
 
     @Override
     public void onListOfJokesReceived(ArrayList<String> listOfJokes) {
+        model.writeListOfJokesOnMemory(listOfJokes);
         view.showJokes(listOfJokes);
     }
 

@@ -1,5 +1,10 @@
 package com.malykhinv.chuck.mvp.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.malykhinv.chuck.di.App;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -22,8 +27,12 @@ public class JokesModel {
     private static final String URL_REFERRER = "https://yandex.ru/";
     private static final String HTML_TAG_TO_SELECT = "div";
     private static final String HTML_ATTRIBUTE_VALUE = "ads-color-box";
-    private Callback callback;
+    private static final String APP_PREFERENCES = "DATA";
+    private static final String DEFAULT_SP_VALUE = "empty";
+    private final Context context = App.getAppComponent().getContext();
+    private final SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
     private final ArrayList<String> listOfJokes = new ArrayList<>();
+    private Callback callback;
 
     public interface Callback {
         void onListOfJokesReceived(ArrayList<String> listOfJokes);
@@ -33,6 +42,9 @@ public class JokesModel {
     public void registerCallback(Callback callback) {
         this.callback = callback;
     }
+
+
+    // Web
 
     public void observeJokes(int countOfJokes) {
 
@@ -87,6 +99,33 @@ public class JokesModel {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        return listOfJokes;
+    }
+
+
+    // Internal storage
+
+    public boolean hasStoredData() {
+        return !sharedPreferences.getAll().isEmpty();
+    }
+
+    public void writeListOfJokesOnMemory(ArrayList<String> listOfJokes) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for (int i = 0; i < listOfJokes.size(); i++) {
+            editor.putString(String.valueOf(i), listOfJokes.get(i));
+        }
+        editor.apply();
+    }
+
+    public ArrayList<String> readListOfJokesFromMemory() {
+        ArrayList<String> listOfJokes = new ArrayList<>();
+
+        for (int i = 0; i < sharedPreferences.getAll().size(); i++) {
+            if (sharedPreferences.contains(String.valueOf(i))) {
+                listOfJokes.add(sharedPreferences.getString(String.valueOf(i), DEFAULT_SP_VALUE));
+            }
         }
 
         return listOfJokes;

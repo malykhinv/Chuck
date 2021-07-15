@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.malykhinv.chuck.R;
 import com.malykhinv.chuck.databinding.ActivityMainBinding;
+import com.malykhinv.chuck.di.App;
 import com.malykhinv.chuck.mvp.view.fragments.JokesFragment;
 import com.malykhinv.chuck.mvp.view.fragments.WebviewFragment;
 
@@ -21,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int INITIAL_MENU_ITEM_INDEX = 0;
     private static final int EXIT_ON_BACK_PRESS_WAITING_TIME = 2000;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private static final String APP_PREFERENCES = "DATA";
+    private final Context context = App.getAppComponent().getContext();
+    private final SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
     private JokesFragment jokesFragment;
     private WebviewFragment webviewFragment;
     private ActivityMainBinding b;
@@ -49,8 +55,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeFragments() {
-        jokesFragment = new JokesFragment();
-        webviewFragment = new WebviewFragment();
+        if (jokesFragment == null) {
+            jokesFragment = new JokesFragment();
+        }
+        if (webviewFragment == null) {
+            webviewFragment = new WebviewFragment();
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -90,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             showInitialFragment();
         } else {
             if (isAboutToClose) {
+                sharedPreferences.edit().clear().apply();
                 finish();
             } else {
                 isAboutToClose = true;
