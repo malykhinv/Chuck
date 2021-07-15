@@ -1,5 +1,6 @@
 package com.malykhinv.chuck.mvp.view.fragments.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.malykhinv.chuck.R;
 import com.malykhinv.chuck.databinding.ItemSingleJokeBinding;
 import com.malykhinv.chuck.di.App;
 
@@ -47,14 +49,17 @@ public class JokesScrollAdapter extends RecyclerView.Adapter<JokesScrollAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ItemSingleJokeBinding b;
+        private final Context context = App.getAppComponent().getContext();
 
         public ViewHolder(@NonNull ItemSingleJokeBinding b) {
             super(b.getRoot());
             this.b = b;
         }
 
+        @SuppressLint("DefaultLocale")
         public void updateJokeText(ArrayList<String> listOfJokes, int position) {
             try {
+                b.textNumberOfJoke.setText(String.format("%s%d", context.getResources().getString(R.string.joke_number), position + 1));
                 b.textJoke.setText(listOfJokes.get(position));
             } catch (Exception e) {
                 e.printStackTrace();

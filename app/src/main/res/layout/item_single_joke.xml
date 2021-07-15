@@ -8,17 +8,32 @@
     android:background="@drawable/single_joke_background">
 
     <TextView
+        android:id="@+id/textNumberOfJoke"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/joke_number"
+        android:textAllCaps="true"
+        android:textColor="@color/grey_99"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textJoke"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin"
         android:layout_marginBottom="@dimen/margin"
         android:textAlignment="textStart"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textNumberOfJoke"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

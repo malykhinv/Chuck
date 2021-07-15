@@ -8,4 +8,6 @@
     <string name="toast_incorrect_number">Unavailable number of jokes to show</string>
 
     <string name="hint_count_of_jokes_field">Number of jokes (1 – 50)</string>
+
+    <string name="joke_number">Joke #</string>
 </resources>
