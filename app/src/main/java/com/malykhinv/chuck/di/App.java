@@ -1,4 +1,4 @@
-package com.malykhinv.di;
+package com.malykhinv.chuck.di;
 
 import android.app.Application;
 
