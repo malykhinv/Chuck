@@ -59,6 +59,14 @@ public class JokesFragment extends Fragment {
         b.recyclerViewJokes.setAdapter(jokesScrollAdapter);
     }
 
+    public void setLoadingTextVisibility(boolean visibility) {
+        if (visibility) {
+            b.textLoading.setVisibility(View.VISIBLE);
+        } else {
+            b.textLoading.setVisibility(View.INVISIBLE);
+        }
+    }
+
     public void clearJokes() {
         jokesScrollAdapter.clearItems();
     }

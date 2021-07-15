@@ -30,9 +30,10 @@ public class JokesPresenter implements JokesModel.Callback {
     // Call from View:
 
     public void onViewCreated() {
+        view.hideKeyboard();
         view.initializeRecyclerView();
 
-        if (model.hasStoredData()) {
+        if (model.hasStoredJokes()) {
             ArrayList<String> listOfJokes = model.readListOfJokesFromMemory();
             view.showJokes(listOfJokes);
         }
@@ -43,10 +44,12 @@ public class JokesPresenter implements JokesModel.Callback {
             int countOfJokes = view.getCountOfJokes();
 
             if (isCorrectCountOfJokes(countOfJokes)) {
+                view.setLoadingTextVisibility(true);
                 view.hideKeyboard();
                 view.clearJokes();
                 model.observeJokes(countOfJokes);
             } else {
+                view.setLoadingTextVisibility(false);
                 view.showMessage(context.getResources().getString(R.string.toast_incorrect_number));
             }
         } catch (Exception e) {
@@ -64,6 +67,7 @@ public class JokesPresenter implements JokesModel.Callback {
     @Override
     public void onListOfJokesReceived(ArrayList<String> listOfJokes) {
         model.writeListOfJokesOnMemory(listOfJokes);
+        view.setLoadingTextVisibility(false);
         view.showJokes(listOfJokes);
     }
 

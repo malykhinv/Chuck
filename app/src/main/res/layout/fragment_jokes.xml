@@ -8,6 +8,20 @@
     android:background="@color/grey_f1"
     tools:context=".mvp.view.fragments.JokesFragment">
 
+    <TextView
+        android:id="@+id/textLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/grey_99"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewJokes"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewJokes"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewJokes"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewJokes" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewJokes"
         android:layout_width="match_parent"
@@ -18,8 +32,10 @@
         android:layout_marginBottom="@dimen/margin_xsmall"
         app:layout_constraintBottom_toTopOf="@+id/editTextCountOfJokes"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabReloadJokes"

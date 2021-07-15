@@ -107,7 +107,7 @@ public class JokesModel {
 
     // Internal storage
 
-    public boolean hasStoredData() {
+    public boolean hasStoredJokes() {
         return !sharedPreferences.getAll().isEmpty();
     }
 

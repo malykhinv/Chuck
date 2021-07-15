@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState == null) {
+            sharedPreferences.edit().clear().apply();
+        }
+
         setStrictModeThreadPolicy();
         bind();
         initializeFragments();
