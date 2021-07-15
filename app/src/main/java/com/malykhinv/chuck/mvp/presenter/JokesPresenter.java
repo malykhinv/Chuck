@@ -43,6 +43,7 @@ public class JokesPresenter implements JokesModel.Callback {
             int countOfJokes = view.getCountOfJokes();
 
             if (isCorrectCountOfJokes(countOfJokes)) {
+                view.hideKeyboard();
                 view.clearJokes();
                 model.observeJokes(countOfJokes);
             } else {
