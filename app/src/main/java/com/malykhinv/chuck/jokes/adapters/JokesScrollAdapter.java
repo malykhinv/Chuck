@@ -1,4 +1,4 @@
-package com.malykhinv.chuck.mvp.view.fragments.adapters;
+package com.malykhinv.chuck.jokes.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

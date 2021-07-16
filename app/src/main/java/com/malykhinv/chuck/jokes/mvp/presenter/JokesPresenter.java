@@ -1,11 +1,11 @@
-package com.malykhinv.chuck.mvp.presenter;
+package com.malykhinv.chuck.jokes.mvp.presenter;
 
 import android.content.Context;
 
 import com.malykhinv.chuck.R;
 import com.malykhinv.chuck.di.App;
-import com.malykhinv.chuck.mvp.model.JokesModel;
-import com.malykhinv.chuck.mvp.view.fragments.JokesFragment;
+import com.malykhinv.chuck.jokes.mvp.model.JokesModel;
+import com.malykhinv.chuck.jokes.mvp.view.JokesFragment;
 
 import java.util.ArrayList;
 

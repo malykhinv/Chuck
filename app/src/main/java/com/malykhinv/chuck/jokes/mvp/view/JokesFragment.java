@@ -1,4 +1,4 @@
-package com.malykhinv.chuck.mvp.view.fragments;
+package com.malykhinv.chuck.jokes.mvp.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.malykhinv.chuck.databinding.FragmentJokesBinding;
-import com.malykhinv.chuck.mvp.presenter.JokesPresenter;
-import com.malykhinv.chuck.mvp.view.fragments.adapters.JokesScrollAdapter;
+import com.malykhinv.chuck.jokes.mvp.presenter.JokesPresenter;
+import com.malykhinv.chuck.jokes.adapters.JokesScrollAdapter;
 
 import org.jetbrains.annotations.NotNull;
 

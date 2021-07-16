@@ -1,4 +1,4 @@
-package com.malykhinv.chuck.mvp.model;
+package com.malykhinv.chuck.jokes.mvp.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;

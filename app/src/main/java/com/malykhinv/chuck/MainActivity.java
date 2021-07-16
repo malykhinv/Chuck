@@ -1,4 +1,4 @@
-package com.malykhinv.chuck.mvp.view;
+package com.malykhinv.chuck;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -13,11 +13,10 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
 
-import com.malykhinv.chuck.R;
 import com.malykhinv.chuck.databinding.ActivityMainBinding;
 import com.malykhinv.chuck.di.App;
-import com.malykhinv.chuck.mvp.view.fragments.JokesFragment;
-import com.malykhinv.chuck.mvp.view.fragments.WebviewFragment;
+import com.malykhinv.chuck.jokes.mvp.view.JokesFragment;
+import com.malykhinv.chuck.webview.WebviewFragment;
 
 public class MainActivity extends AppCompatActivity {
 
