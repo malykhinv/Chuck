@@ -60,15 +60,15 @@
         android:background="@drawable/input_field_background"
         android:ems="10"
         android:hint="@string/hint_count_of_jokes_field"
+        android:importantForAutofill="no"
         android:inputType="numberDecimal"
         android:longClickable="false"
-        android:maxLength="2"
+        android:maxLength="4"
         android:paddingStart="@dimen/padding"
         android:paddingEnd="@dimen/padding"
         android:textColor="@color/black"
         android:textColorHint="@color/grey_99"
         app:layout_constraintBottom_toBottomOf="@+id/fabReloadJokes"
         app:layout_constraintEnd_toStartOf="@+id/fabReloadJokes"
-        app:layout_constraintStart_toStartOf="parent"
-        android:importantForAutofill="no" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

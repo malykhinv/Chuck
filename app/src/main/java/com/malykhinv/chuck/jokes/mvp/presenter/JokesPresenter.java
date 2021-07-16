@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class JokesPresenter implements JokesModel.Callback {
 
     private static final int MIN_COUNT_OF_JOKES = 1;
-    private static final int MAX_COUNT_OF_JOKES = 50;
     private final Context context = App.getAppComponent().getContext();
     private final JokesFragment view;
     private JokesModel model;
@@ -47,7 +46,7 @@ public class JokesPresenter implements JokesModel.Callback {
                 view.setLoadingTextVisibility(true);
                 view.hideKeyboard();
                 view.clearJokes();
-                model.observeJokes(countOfJokes);
+                model.loadJokes(countOfJokes);
             } else {
                 view.setLoadingTextVisibility(false);
                 view.showMessage(context.getResources().getString(R.string.toast_incorrect_number));
@@ -58,7 +57,7 @@ public class JokesPresenter implements JokesModel.Callback {
     }
 
     private boolean isCorrectCountOfJokes(int countOfJokes) {
-        return countOfJokes >= MIN_COUNT_OF_JOKES && countOfJokes <= MAX_COUNT_OF_JOKES;
+        return countOfJokes >= MIN_COUNT_OF_JOKES;
     }
 
 
@@ -74,5 +73,6 @@ public class JokesPresenter implements JokesModel.Callback {
     @Override
     public void onError(String message) {
         view.showMessage(message);
+        view.setLoadingTextVisibility(false);
     }
 }

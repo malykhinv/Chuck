@@ -3,30 +3,26 @@ package com.malykhinv.chuck.jokes.mvp.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.malykhinv.chuck.api.ApiResponse;
+import com.malykhinv.chuck.api.IcndbApi;
+import com.malykhinv.chuck.api.Value;
 import com.malykhinv.chuck.di.App;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class JokesModel {
 
-    private static final String URL_TO_PARSE = "http://www.icndb.com/the-jokes-2/";
-    private static final String USER_AGENT = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0";
-    private static final String URL_REFERRER = "https://yandex.ru/";
-    private static final String HTML_TAG_TO_SELECT = "tr";
-    private static final String HTML_ATTRIBUTE_VALUE = "jokes-odd";
+    private static final String QUOTE_CODE = "&quot;";
+    private static final String QUOTE_SIGN = "\"";
     private static final String APP_PREFERENCES = "DATA";
     private static final String DEFAULT_SP_VALUE = "empty";
     private final Context context = App.getAppComponent().getContext();
     private final SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-    private final ArrayList<String> listOfJokes = new ArrayList<>();
+    private final IcndbApi api = App.getAppComponent().getApi();
     private Callback callback;
 
     public interface Callback {
@@ -41,64 +37,40 @@ public class JokesModel {
 
     // Web
 
-    public void observeJokes(int countOfJokes) {
+    public void loadJokes(int countOfJokes) {
 
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
+        api.getJokes(countOfJokes)
+                .enqueue(new retrofit2.Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if (callback != null) {
+                            ArrayList<String> listOfJokes = new ArrayList<>();
 
-        Observable<ArrayList<String>> observable = Observable
-                .fromCallable(() -> loadListOfJokesFromWebsite(countOfJokes))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                            List<Value> values = response.body().getValue();
+                            for (Value value : values) {
+                                String joke = prepareQuotes(value.getJoke());
+                                listOfJokes.add(joke);
+                            }
 
-        observable.subscribe(new Observer<ArrayList<String>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                compositeDisposable.add(d);
-            }
+                            callback.onListOfJokesReceived(listOfJokes);
+                        }
+                    }
 
-            @Override
-            public void onNext(@NonNull ArrayList<String> listOfJokes) {
-                if (callback != null) {
-                    callback.onListOfJokesReceived(listOfJokes);
-                }
-            }
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        if (callback != null) {
+                            callback.onError(t.getMessage());
+                        }
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                if (callback != null) {
-                    callback.onError(e.getMessage());
-                }
-            }
-
-            @Override
-            public void onComplete() {
-                compositeDisposable.dispose();
-            }
-        });
-    }
-
-    private ArrayList<String> loadListOfJokesFromWebsite(int countOfJokes) {
-//        try {
-//            final Document doc = Jsoup.connect(URL_TO_PARSE)
-//                    .userAgent(USER_AGENT)
-//                    .referrer(URL_REFERRER)
-//                    .timeout(3000)
-//                    .get();
-//
-//            final Elements docElements = doc.select(HTML_TAG_TO_SELECT + "." + HTML_ATTRIBUTE_VALUE);
-//
-//            int limitOfJokes = Math.min(countOfJokes, docElements.size());
-//
-//            for (int i = 0; i < limitOfJokes; i++) {
-//                String joke = docElements.get(i).text();
-//                listOfJokes.add(joke);
-//
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        return listOfJokes;
+                    private String prepareQuotes(String joke) {
+                        if (joke.contains(QUOTE_CODE)) {
+                            return joke.replaceAll(QUOTE_CODE, QUOTE_SIGN);
+                        } else {
+                            return joke;
+                        }
+                    }
+                });
     }
 
 
