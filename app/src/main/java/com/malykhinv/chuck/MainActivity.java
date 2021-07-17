@@ -1,12 +1,11 @@
 package com.malykhinv.chuck;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.malykhinv.chuck.databinding.ActivityMainBinding;
-import com.malykhinv.chuck.di.App;
 import com.malykhinv.chuck.jokes.mvp.view.JokesFragment;
 import com.malykhinv.chuck.webview.WebviewFragment;
 
@@ -23,9 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int INITIAL_MENU_ITEM_INDEX = 0;
     private static final int EXIT_ON_BACK_PRESS_WAITING_TIME = 2000;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
-    private static final String APP_PREFERENCES = "DATA";
-    private final Context context = App.getAppComponent().getContext();
-    private final SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
     private JokesFragment jokesFragment;
     private WebviewFragment webviewFragment;
     private ActivityMainBinding b;
@@ -35,15 +30,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState == null) {
-            sharedPreferences.edit().clear().apply();
-        }
-
         setStrictModeThreadPolicy();
         bind();
         initializeFragments();
         initializeBottomNavigation();
         showInitialFragment();
+
+        this.getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (isAboutToClose) {
+                    finish();
+                } else {
+                    isAboutToClose = true;
+                    showMessage(getString(R.string.toast_press_back_again_to_quit));
+                    new Handler().postDelayed(() -> isAboutToClose = false, EXIT_ON_BACK_PRESS_WAITING_TIME);
+                }
+            }
+        });
     }
 
     private void setStrictModeThreadPolicy() {
@@ -94,23 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 b.bottomNavigationView.getMenu()
                         .getItem(INITIAL_MENU_ITEM_INDEX)
                         .getItemId());
-    }
-
-    @Override
-    public void onBackPressed() {
-        int initialMenuItemId = b.bottomNavigationView.getMenu().getItem(INITIAL_MENU_ITEM_INDEX).getItemId();
-        if (b.bottomNavigationView.getSelectedItemId() != initialMenuItemId) {
-            showInitialFragment();
-        } else {
-            if (isAboutToClose) {
-                sharedPreferences.edit().clear().apply();
-                finish();
-            } else {
-                isAboutToClose = true;
-                showMessage(getString(R.string.toast_press_back_again_to_quit));
-                new Handler().postDelayed(() -> isAboutToClose = false, EXIT_ON_BACK_PRESS_WAITING_TIME);
-            }
-        }
     }
 
     private void showMessage(String message) {

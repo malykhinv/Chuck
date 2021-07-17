@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,8 +24,23 @@ public class WebviewFragment extends Fragment {
     private View view;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (b.webView.canGoBack()) {
+                    b.webView.goBack();
+                } else {
+                    setEnabled(false);
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                    setEnabled(true);
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

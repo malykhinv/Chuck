@@ -3,6 +3,8 @@ package com.malykhinv.chuck.jokes.mvp.view;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -26,6 +28,22 @@ public class JokesFragment extends Fragment {
     private FragmentJokesBinding b;
     private View view;
     private JokesPresenter presenter;
+
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                setEnabled(false);
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                setEnabled(true);
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
