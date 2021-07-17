@@ -47,7 +47,9 @@ public class WebviewFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        b = FragmentWebviewBinding.inflate(inflater, container, false);
+        if (b == null) {
+            b = FragmentWebviewBinding.inflate(inflater, container, false);
+        }
 
         if (view == null) {
             view = b.getRoot();

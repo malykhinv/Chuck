@@ -48,7 +48,9 @@ public class JokesFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        b = FragmentJokesBinding.inflate(inflater, container, false);
+        if (b == null) {
+            b = FragmentJokesBinding.inflate(inflater, container, false);
+        }
 
         b.fabReloadJokes.setOnClickListener(v -> presenter.onRefreshButtonWasClicked());
 
@@ -73,8 +75,10 @@ public class JokesFragment extends Fragment {
     }
 
     public void initializeRecyclerView() {
-        b.recyclerViewJokes.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        b.recyclerViewJokes.setAdapter(jokesScrollAdapter);
+        if (b.recyclerViewJokes.getAdapter() == null) {
+            b.recyclerViewJokes.setLayoutManager(new LinearLayoutManager(this.getContext()));
+            b.recyclerViewJokes.setAdapter(jokesScrollAdapter);
+        }
     }
 
     public void setLoadingTextVisibility(boolean visibility) {
