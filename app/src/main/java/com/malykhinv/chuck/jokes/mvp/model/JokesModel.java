@@ -1,8 +1,5 @@
 package com.malykhinv.chuck.jokes.mvp.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.malykhinv.chuck.api.ApiResponse;
 import com.malykhinv.chuck.api.IcndbApi;
 import com.malykhinv.chuck.api.Value;

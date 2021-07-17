@@ -8,7 +8,7 @@ public class ApiResponse {
 
     @SerializedName("value")
     @Expose
-    private List<Value> value = null;
+    private final List<Value> value = null;
 
     public List<Value> getValue() {
         return value;
