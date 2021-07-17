@@ -31,11 +31,6 @@ public class JokesPresenter implements JokesModel.Callback {
     public void onViewCreated() {
         view.hideKeyboard();
         view.initializeRecyclerView();
-
-        if (model.hasStoredJokes()) {
-            ArrayList<String> listOfJokes = model.readListOfJokesFromMemory();
-            view.showJokes(listOfJokes);
-        }
     }
 
     public void onRefreshButtonWasClicked() {
@@ -65,7 +60,6 @@ public class JokesPresenter implements JokesModel.Callback {
 
     @Override
     public void onListOfJokesReceived(ArrayList<String> listOfJokes) {
-        model.writeListOfJokesOnMemory(listOfJokes);
         view.setLoadingTextVisibility(false);
         view.showJokes(listOfJokes);
     }
